@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://ai-video-worker.goodluckjiachen.workers.dev';
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://api.vdpr2.ygtxl.dpdns.org';
 
 const api = axios.create({
   baseURL: `${backendUrl}/api/v1`,
@@ -121,7 +121,7 @@ export const fileApi = {
     return response.data;
   },
   previewUrl: (filename: string, prefix?: string) => {
-    const r2PublicUrl = import.meta.env.VITE_R2_PUBLIC_URL || '';
+    const r2PublicUrl = import.meta.env.VITE_R2_PUBLIC_URL || 'https://api.vdpr2.ygtxl.dpdns.org/api/v1/files';
     const key = prefix ? `${prefix.replace(/\/$/, '')}/${filename}` : filename;
     return `${r2PublicUrl}/${encodeURIComponent(key)}`;
   },
@@ -131,7 +131,7 @@ export const fileApi = {
     if (prefix) {
       params.set('prefix', prefix.replace(/\/$/, '') + '/');
     }
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://ai-video-worker.goodluckjiachen.workers.dev';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://api.vdpr2.ygtxl.dpdns.org';
     const response = await fetch(`${backendUrl}/api/v1/files/version/${encodeURIComponent(filename)}?${params.toString()}`);
     return response.json();
   },

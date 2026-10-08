@@ -14,7 +14,7 @@ GITHUB_REPO_OWNER = "Dragontxl"
 GITHUB_REPO_NAME = "vdproc2"
 FRONTEND_URL = "https://vdpr2.ygtxl.dpdns.org"
 ADMIN_URL = "https://vdpr2.ygtxl.dpdns.org"
-R2_PUBLIC_URL = "https://vdpr2-r2.ygtxl.dpdns.org"
+R2_PUBLIC_URL = "https://api.vdpr2.ygtxl.dpdns.org/api/v1/files"
 
 [[env.production.d1_databases]]
 binding = "DB"
@@ -38,6 +38,7 @@ GITHUB_REPO_OWNER = "Dragontxl"
 GITHUB_REPO_NAME = "vdproc2"
 FRONTEND_URL = "https://vdpr2.ygtxl.dpdns.org"
 ADMIN_URL = "https://vdpr2.ygtxl.dpdns.org"
+R2_PUBLIC_URL = "https://api.vdpr2.ygtxl.dpdns.org/api/v1/files"
 
 [[d1_databases]]
 binding = "DB"
