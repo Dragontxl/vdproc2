@@ -1,0 +1,5 @@
+V1：
+V2：e995950 insightface 测量回填：face_measure.py 已接入 crop-shots.sh:170-175，analyze_scene.py 已不再让 Gemini 填 best_face_time/坐标（force_align 里初始化为空），
+坐标改由实际抽帧检测回填。
+47cfc8e（刚推）分镜下载后立即上传 R2 再回 COMPLETED，修掉了日志里"已生成未入库"的数据丢失。
+V3:增加旁白模式，更换模型为2.5-flash

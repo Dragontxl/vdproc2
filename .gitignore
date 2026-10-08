@@ -60,3 +60,13 @@ __pycache__/
 # Misc
 *.local
 *.log
+
+# Runtime logs and temp data
+info.txt
+0_range-process.txt
+job_logs.txt
+fix_script.py
+analysis_result.json
+*_analysis_result.json
+backend/wl*/
+backend/b40f1e5f9b374522bba49b5d853b824b/
