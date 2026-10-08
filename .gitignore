@@ -71,3 +71,4 @@ analysis_result.json
 backend/wl*/
 backend/b40f1e5f9b374522bba49b5d853b824b/
 secrets.txt
+github-secrets-template.json
