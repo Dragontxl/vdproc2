@@ -23,6 +23,9 @@ export default function Accounts() {
   const [currentGithubId, setCurrentGithubId] = useState<number | null>(null);
   const [bindings, setBindings] = useState([]);
   const [unboundAIAccounts, setUnboundAIAccounts] = useState([]);
+  const [editBindingModalOpen, setEditBindingModalOpen] = useState(false);
+  const [currentBinding, setCurrentBinding] = useState<any>(null);
+  const [bindingForm] = Form.useForm();
 
   const loadAccounts = async () => {
     setLoading(true);
@@ -194,6 +197,51 @@ export default function Accounts() {
     }
   };
 
+  const handleEditBinding = async (binding: any) => {
+    setCurrentBinding(binding);
+    // 加载所有 AI 账户（包括已绑定的，因为编辑时可以看到当前选中的）
+    try {
+      const result = await accountApi.listAI();
+      const allAIAccounts = result.data || [];
+      // 可用的 AI 账户 = 未绑定的 + 当前绑定的那个
+      const currentAIAccount = allAIAccounts.find((a: any) => a.id === binding.ai_account_id);
+      const availableAccounts: any[] = [...unboundAIAccounts];
+      if (currentAIAccount && !availableAccounts.find((a: any) => a.id === currentAIAccount.id)) {
+        availableAccounts.push(currentAIAccount);
+      }
+      // 按 id 排序
+      availableAccounts.sort((a: any, b: any) => a.id - b.id);
+      
+      bindingForm.setFieldsValue({
+        ai_account_id: binding.ai_account_id,
+        priority: binding.priority,
+      });
+      // 存储可用列表到 state 或直接用
+      (window as any)._editBindingAvailableAccounts = availableAccounts;
+      setEditBindingModalOpen(true);
+    } catch (error) {
+      message.error('加载 AI 账户失败');
+    }
+  };
+
+  const handleSaveBinding = async () => {
+    if (!currentBinding) return;
+    try {
+      const values = await bindingForm.validateFields();
+      await accountApi.updateBinding(currentBinding.id, {
+        ai_account_id: values.ai_account_id,
+        priority: values.priority,
+      });
+      message.success('绑定更新成功');
+      setEditBindingModalOpen(false);
+      if (currentGithubId) {
+        await openBindingModal(currentGithubId);
+      }
+    } catch (error: any) {
+      message.error(error?.response?.data?.msg || '更新失败');
+    }
+  };
+
   const githubColumns = [
     {
       title: '名称',
@@ -350,6 +398,13 @@ export default function Accounts() {
         <Space>
           <Button 
             size="small" 
+            icon={<EditOutlined />} 
+            onClick={() => handleEditBinding(record)}
+          >
+            编辑
+          </Button>
+          <Button 
+            size="small" 
             icon={<SwapOutlined />} 
             onClick={() => handleReplaceBinding(record.id)} 
             disabled={record.is_healthy}
@@ -493,6 +548,31 @@ export default function Accounts() {
           pagination={false}
           locale={{ emptyText: '暂无绑定关系' }}
         />
+      </Modal>
+
+      <Modal
+        title="编辑绑定"
+        open={editBindingModalOpen}
+        onOk={handleSaveBinding}
+        onCancel={() => setEditBindingModalOpen(false)}
+        okText="保存"
+        cancelText="取消"
+        width={500}
+      >
+        <Form form={bindingForm} layout="vertical">
+          <Form.Item name="ai_account_id" label="AI 账户" rules={[{ required: true, message: '请选择 AI 账户' }]}>
+            <Select placeholder="请选择 AI 账户">
+              {((window as any)._editBindingAvailableAccounts || []).map((acc: any) => (
+                <Select.Option key={acc.id} value={acc.id}>
+                  {acc.account_alias} ({acc.api_type === 'text' ? '文本' : acc.api_type === 'image' ? '图像' : '视频'})
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item name="priority" label="优先级" rules={[{ required: true, message: '请输入优先级' }]} initialValue={0}>
+            <InputNumber min={0} style={{ width: '100%' }} placeholder="数字越小优先级越高" />
+          </Form.Item>
+        </Form>
       </Modal>
     </div>
   );

@@ -380,6 +380,37 @@ export class AccountService {
     `).bind(newAiAccountId, bindingId).run();
   }
 
+  async updateBinding(bindingId: number, data: { ai_account_id?: number; priority?: number }): Promise<void> {
+    const current = await this.env.DB.prepare(`
+      SELECT * FROM github_ai_bindings WHERE id = ?
+    `).bind(bindingId).first() as any;
+
+    if (!current) {
+      throw new Error('绑定不存在');
+    }
+
+    // 如果要更换 AI 账户，检查新账户是否已被其他绑定占用
+    if (data.ai_account_id !== undefined && data.ai_account_id !== current.ai_account_id) {
+      const existingBinding = await this.env.DB.prepare(`
+        SELECT * FROM github_ai_bindings 
+        WHERE ai_account_id = ? AND is_active = TRUE AND id != ?
+      `).bind(data.ai_account_id, bindingId).first();
+
+      if (existingBinding) {
+        throw new Error('AI账户已绑定到其他GitHub账户');
+      }
+    }
+
+    const newAiAccountId = data.ai_account_id !== undefined ? data.ai_account_id : current.ai_account_id;
+    const newPriority = data.priority !== undefined ? data.priority : current.priority;
+
+    await this.env.DB.prepare(`
+      UPDATE github_ai_bindings 
+      SET ai_account_id = ?, priority = ?, updated_at = STRFTIME('%Y-%m-%dT%H:%M:%fZ', 'now')
+      WHERE id = ?
+    `).bind(newAiAccountId, newPriority, bindingId).run();
+  }
+
   async getBoundAIAccounts(githubAccountId: number): Promise<any[]> {
     const result = await this.env.DB.prepare(`
       SELECT gab.*, aa.account_alias, aa.api_type, aa.is_healthy, aa.health_check_msg, aa.daily_usage, aa.daily_limit

@@ -200,6 +200,21 @@ accountRoutes.put('/bindings/:bindingId/replace', async (c) => {
   }
 });
 
+accountRoutes.put('/bindings/:bindingId', async (c) => {
+  const service = new AccountService(c.env as Bindings);
+  const body = await c.req.json();
+  
+  try {
+    await service.updateBinding(parseInt(c.req.param('bindingId')), {
+      ai_account_id: body.ai_account_id,
+      priority: body.priority,
+    });
+    return c.json({ code: 200, data: null, msg: '更新成功' });
+  } catch (error) {
+    return c.json({ code: 400, data: null, msg: (error as Error).message }, 400);
+  }
+});
+
 accountRoutes.delete('/bindings/:bindingId', async (c) => {
   const service = new AccountService(c.env as Bindings);
   await service.unbindAIAccount(parseInt(c.req.param('bindingId')));
