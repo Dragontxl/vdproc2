@@ -1,7 +1,7 @@
 export async function onRequest(context: { request: Request; env: { API_URL?: string } }) {
   const { request, env } = context;
   const url = new URL(request.url);
-  const apiBaseUrl = env.API_URL || 'https://ai-video.ldragon.xyz';
+  const apiBaseUrl = env.API_URL || 'https://ai-video-worker.goodluckjiachen.workers.dev';
   const apiUrl = `${apiBaseUrl}${url.pathname}${url.search}`;
   
   const headers = new Headers(request.headers);

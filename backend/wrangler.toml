@@ -2,27 +2,24 @@ name = "ai-video-worker"
 main = "src/index.ts"
 compatibility_date = "2024-05-29"
 compatibility_flags = ["nodejs_compat"]
+account_id = "d30bed2763a23cf8eddf343ca192c5ff"
 
 [env.production]
 name = "ai-video-worker"
 main = "src/index.ts"
 
 [env.production.vars]
-ADMIN_API_KEY = "${ADMIN_API_KEY}"
-CALLBACK_SECRET = "${CALLBACK_SECRET}"
-JWT_SECRET = "${JWT_SECRET}"
 ENVIRONMENT = "production"
 GITHUB_REPO_OWNER = "Dragontxl"
-GITHUB_REPO_NAME = "vdproc"
-FRONTEND_URL = "${FRONTEND_URL}"
-ADMIN_URL = "${ADMIN_URL}"
-R2_PUBLIC_URL = "${R2_PUBLIC_URL}"
-CLOUDFLARE_ZONE_ID = "a30fd8d66c6b1bbceb77d16f9e6f80cb"
+GITHUB_REPO_NAME = "vdproc2"
+FRONTEND_URL = "https://ai-video-frontend-5xr.pages.dev"
+ADMIN_URL = "https://ai-video-frontend-5xr.pages.dev"
+R2_PUBLIC_URL = ""
 
 [[env.production.d1_databases]]
 binding = "DB"
 database_name = "ai-video-db"
-database_id = "e85ca381-6d56-4971-ae3e-bf91d82cf508"
+database_id = "75b5c974-04a5-4b27-9520-c5e3349903e4"
 
 [[env.production.r2_buckets]]
 binding = "R2"
@@ -30,25 +27,22 @@ bucket_name = "ai-video-bucket"
 
 [[env.production.kv_namespaces]]
 binding = "KV"
-id = "f657d34c477947e4b9ca003332b75073"
+id = "2571947d6a3944a2a7f3e99f4679de10"
 
 [env.production.triggers]
 crons = ["*/5 * * * *"]
 
 [vars]
-ADMIN_API_KEY = "${ADMIN_API_KEY}"
-CALLBACK_SECRET = "${CALLBACK_SECRET}"
-JWT_SECRET = "${JWT_SECRET}"
 ENVIRONMENT = "production"
 GITHUB_REPO_OWNER = "Dragontxl"
-GITHUB_REPO_NAME = "vdproc"
-FRONTEND_URL = "${FRONTEND_URL}"
-ADMIN_URL = "${ADMIN_URL}"
+GITHUB_REPO_NAME = "vdproc2"
+FRONTEND_URL = "https://ai-video-frontend-5xr.pages.dev"
+ADMIN_URL = "https://ai-video-frontend-5xr.pages.dev"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "ai-video-db"
-database_id = "e85ca381-6d56-4971-ae3e-bf91d82cf508"
+database_id = "75b5c974-04a5-4b27-9520-c5e3349903e4"
 
 [[r2_buckets]]
 binding = "R2"
@@ -56,12 +50,7 @@ bucket_name = "ai-video-bucket"
 
 [[kv_namespaces]]
 binding = "KV"
-id = "f657d34c477947e4b9ca003332b75073"
-
-[[routes]]
-pattern = "ai-video.ldragon.xyz"
-zone_name = "ldragon.xyz"
-custom_domain = true
+id = "2571947d6a3944a2a7f3e99f4679de10"
 
 [triggers]
 crons = ["*/5 * * * *"]

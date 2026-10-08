@@ -1,0 +1,6 @@
+name = "ai-video-frontend"
+compatibility_date = "2024-05-29"
+pages_build_output_dir = "dist"
+
+[vars]
+API_URL = "https://ai-video-worker.goodluckjiachen.workers.dev"
