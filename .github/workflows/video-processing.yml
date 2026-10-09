@@ -275,7 +275,7 @@ jobs:
           AI_ACCOUNTS: ${{ inputs.ai_accounts || github.event.client_payload.ai_accounts }}
           COOLDOWN_SECONDS: ${{ inputs.cooldown_seconds || github.event.client_payload.cooldown_seconds || 2 }}
           MAX_CONCURRENT: ${{ steps.parse_config.outputs.MAX_CONCURRENT }}
-          VIDEO_MODEL: ${{ inputs.video_model || github.event.client_payload.video_model || 'agnes-video-2.5-flash' }}
+          VIDEO_MODEL: ${{ inputs.video_model || github.event.client_payload.video_model || 'agnes-video-v2.0' }}
         run: |
           docker run --rm \
             -e TASK_ID="$TASK_ID" \

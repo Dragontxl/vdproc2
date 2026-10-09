@@ -121,7 +121,7 @@ jobs:
           AI_ACCOUNTS: ${{ github.event.client_payload.ai_accounts }}
           CONFIG_JSON: ${{ github.event.client_payload.config || '{}' }}
           SUBTASKS_JSON: ${{ github.event.client_payload.subtasks || '[]' }}
-          VIDEO_MODEL: ${{ github.event.client_payload.video_model || 'agnes-video-2.5-flash' }}
+          VIDEO_MODEL: ${{ github.event.client_payload.video_model || 'agnes-video-v2.0' }}
         run: |
           VIDEO_PATH=$(echo "$CONFIG_JSON" | jq -r '.video_path // ""')
           FPS=$(echo "$CONFIG_JSON" | jq -r '.fps // 30')
@@ -284,7 +284,7 @@ jobs:
           AI_BASE_URL: ${{ inputs.ai_base_url || github.event.client_payload.ai_base_url || secrets.AI_BASE_URL }}
           AI_ACCOUNTS: ${{ inputs.ai_accounts || github.event.client_payload.ai_accounts }}
           MAX_CONCURRENT: ${{ steps.parse_subtask.outputs.MAX_CONCURRENT }}
-          VIDEO_MODEL: ${{ inputs.video_model || github.event.client_payload.video_model || 'agnes-video-2.5-flash' }}
+          VIDEO_MODEL: ${{ inputs.video_model || github.event.client_payload.video_model || 'agnes-video-v2.0' }}
         run: |
           docker run --rm \
             -e TASK_ID="$TASK_ID" \
