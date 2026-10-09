@@ -827,11 +827,7 @@ export class TaskService {
 
     const task = await this.getTask(taskId);
     if (task) {
-      if (task.ai_account_id) {
-        const accountService = new (await import('./AccountService')).AccountService(this.env);
-        await accountService.releaseAIAccount(task.ai_account_id);
-        console.log('handleGitHubCallback: Released AI account', task.ai_account_id);
-      }
+      await this.releaseAllAIAccountCooldowns();
       if (task.github_account_id) {
         await this.env.DB.prepare(`
           UPDATE github_accounts SET monthly_used_minutes = monthly_used_minutes + 1
@@ -1373,6 +1369,15 @@ export class TaskService {
       await accountService.releaseAIAccount(task.ai_account_id);
       console.log(`releaseTaskAIAccount: Released AI account ${task.ai_account_id} for task ${taskId}`);
     }
+    await this.releaseAllAIAccountCooldowns();
+  }
+
+  private async releaseAllAIAccountCooldowns(): Promise<void> {
+    await this.env.DB.prepare(`
+      UPDATE ai_accounts SET cooldown_until = NULL
+      WHERE cooldown_until IS NOT NULL
+    `).run();
+    console.log('releaseAllAIAccountCooldowns: Released all AI account cooldowns');
   }
 
   private async checkPhaseCompletion(taskId: string, phase: string) {
