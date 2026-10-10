@@ -180,7 +180,7 @@ process_frame() {
 
     echo "Processing shot $shot_index, ${frame_type} frame..."
 
-    R2_PUBLIC_URL="${R2_PUBLIC_URL:-https://aivideobucket.ldragon.xyz}"
+    R2_PUBLIC_URL="${R2_PUBLIC_URL:-https://aivideobucket.ygtxl.dpdns.org}"
     INPUT_IMAGE_URL="${R2_PUBLIC_URL}/${FRAME_KEY}"
 
     echo "  Input image URL: $INPUT_IMAGE_URL"

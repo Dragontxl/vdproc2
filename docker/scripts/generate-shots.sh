@@ -77,7 +77,7 @@ notify_subtask() {
         return
     fi
     
-    local r2_public_url="${R2_PUBLIC_URL:-https://aivideobucket.ldragon.xyz}"
+    local r2_public_url="${R2_PUBLIC_URL:-https://aivideobucket.ygtxl.dpdns.org}"
     local first_frame_url="${r2_public_url}/${TASK_ID}/ai_shot_frames/shot_${shot_index}_first.png"
     if [ "$shot_index" -gt 0 ]; then
         first_frame_url="${r2_public_url}/${TASK_ID}/ai_shot_frames/shot_$((shot_index - 1))_last.png"

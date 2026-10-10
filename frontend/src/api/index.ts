@@ -122,7 +122,7 @@ export const fileApi = {
     return response.data;
   },
   previewUrl: (filename: string, prefix?: string) => {
-    const r2PublicUrl = import.meta.env.VITE_R2_PUBLIC_URL || 'https://api.vdpr2.ygtxl.dpdns.org/api/v1/files';
+    const r2PublicUrl = import.meta.env.VITE_R2_PUBLIC_URL || 'https://aivideobucket.ygtxl.dpdns.org';
     const key = prefix ? `${prefix.replace(/\/$/, '')}/${filename}` : filename;
     return `${r2PublicUrl}/${encodeURIComponent(key)}`;
   },

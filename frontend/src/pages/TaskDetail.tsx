@@ -303,7 +303,7 @@ export default function TaskDetail() {
   };
 
   // R2 公开 URL
-  const r2PublicUrl = import.meta.env.VITE_R2_PUBLIC_URL || 'https://aivideobucket.ldragon.xyz';
+  const r2PublicUrl = import.meta.env.VITE_R2_PUBLIC_URL || 'https://aivideobucket.ygtxl.dpdns.org';
 
   // 获取分镜的首帧和尾帧 URL
   const getFrameUrls = (subtaskIndex: number): { firstFrameUrl: string; lastFrameUrl: string } => {
